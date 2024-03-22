@@ -1,0 +1,107 @@
+//---Path AEG Robust Rising
+$path {
+$name path1r ;
+$transition {
+A ^;
+G_2/U1/Z ^;
+G_4/U1/Z ^;
+G ^ ;
+}
+$condition{ //conditions for robust test case
+B 11;
+}
+}
+//---Path AEG Robust Falling
+$path { $name path1f ;
+$transition {
+A v;
+G_2/U1/Z v;
+G_4/U1/Z v;
+G v ;
+}
+$condition{ //conditions for robust test case
+B 11;
+}
+}
+//---Path BEG Robust Rising
+$path { $name path2r ;
+$transition {
+B ^;
+G_2/U1/A ^;
+G_2/U1/Z ^;
+G_4/U1/Z ^;
+G ^ ;
+}
+$condition{ //conditions for robust test case
+A 11;
+C 00;
+}
+}
+//---Path BEG Robust Falling
+$path { $name path2f ;
+$transition {
+B v;
+G_2/U1/A v;
+G_2/U1/Z v;
+G_4/U1/Z v;
+G v ;
+}
+$condition{ //conditions for robust test case
+A 11;
+C 00;
+}
+}
+//---Path BDFG Robust Rising
+$path { $name path3r ;
+$transition {
+B ^;
+G_1/U1/A ^;
+G_3/U1/B v; //transition changes after inverting gate
+G_4/U1/Z v;
+G v ;
+}
+$condition{ //conditions for robust test case
+A 00;
+C 11;
+}
+}
+//---Path BDFG Robust Falling
+$path { $name path3f ;
+$transition {
+B v;
+G_1/U1/A v;
+G_3/U1/B ^; //transition changes after inverting gate
+G_4/U1/Z ^;
+G ^ ;
+}
+$condition{
+A 00;
+C 11;
+}
+}
+//---Path CFG Robust Rising
+$path { $name path4r ;
+$transition {
+C ^;
+G_3/U1/Z ^;
+G_4/U1/Z ^;
+G ^ ;
+}
+$condition{ //conditions for robust test case
+B 00;
+A 11;
+}
+}
+//---Path CFG Robust Falling
+$path { $name path4f ;
+$transition {
+C v;
+G_3/U1/Z v;
+G_4/U1/Z v;
+G v ;
+}
+$condition{ //conditions for robust test case
+B 00;
+A 11;
+}
+}
