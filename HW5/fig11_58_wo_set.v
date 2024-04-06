@@ -1,5 +1,5 @@
 `include "gtech_lib.v"
-module circuit(X,Z);
+module circuit(x,CP,z);
 input x,CP;
 output z;
 
