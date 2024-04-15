@@ -13,8 +13,8 @@ GTECH_AND2 G5(c5,y3,c9);
 GTECH_AND2 G6(c8,c9,Y3);
 GTECH_NOT G7(c8,z);
 
-GTECH_UDP_FD1 FF1 (c5,clk, y1);
-GTECH_UDP_FD1 FF2 (c8,clk, y2);
-GTECH_UDP_FD1 FF3 (Y3,clk, y3);
+GTECH_UDP_FD1 FF1 (c5,clk,y1);
+GTECH_UDP_FD1 FF2 (c8,clk,y2);
+GTECH_UDP_FD1 FF3 (Y3,clk,y3);
 
 endmodule
