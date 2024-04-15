@@ -1,0 +1,165 @@
+STIL 1.0 {
+    Design 2005;
+}
+Header {
+    Title "Minimal STIL for design `circuit'";
+    Date "Mon Apr 15 02:47:51 2024";
+    Source "DFT Compiler O-2018.06-SP1";
+}
+Signals {
+    "clk" In;
+    "x" In;
+    "z" Out;
+    "test_si" In;
+    "test_so" Out;
+    "test_se" In;
+}
+SignalGroups {
+    "_si" = '"test_si"' {
+        ScanIn;
+    }
+    "_so" = '"test_so"' {
+        ScanOut;
+    }
+    "_clk" = '"clk"';
+    "all_inputs" = '"clk" + "x" + "test_si" + "test_se"';
+    "all_outputs" = '"z" + "test_so"';
+    "all_ports" = '"all_inputs" + "all_outputs"';
+    "_pi" = '"clk" + "x" + "test_si" + "test_se"';
+    "_po" = '"z" + "test_so"';
+}
+ScanStructures {
+    ScanChain "1" {
+        ScanLength 3;
+        ScanIn "test_si";
+        ScanOut "test_so";
+        ScanEnable "test_se";
+        ScanMasterClock "clk";
+    }
+}
+Timing {
+    WaveformTable "_default_WFT_" {
+        Period '100ns';
+        Waveforms {
+            "all_inputs" {
+                0 {
+                    '0ns' D;
+                }
+            }
+            "all_inputs" {
+                1 {
+                    '0ns' U;
+                }
+            }
+            "all_inputs" {
+                Z {
+                    '0ns' Z;
+                }
+            }
+            "all_inputs" {
+                N {
+                    '0ns' N;
+                }
+            }
+            "all_outputs" {
+                X {
+                    '0ns' X;
+                    '40ns' X;
+                }
+            }
+            "all_outputs" {
+                H {
+                    '0ns' X;
+                    '40ns' H;
+                }
+            }
+            "all_outputs" {
+                T {
+                    '0ns' X;
+                    '40ns' T;
+                }
+            }
+            "all_outputs" {
+                L {
+                    '0ns' X;
+                    '40ns' L;
+                }
+            }
+            "clk" {
+                P {
+                    '0ns' D;
+                    '1ns' U;
+                    '10ns' D;
+                }
+            }
+        }
+    }
+}
+Procedures {
+    "capture" {
+        W "_default_WFT_";
+        C {
+            "all_inputs" = 0NNN;
+            "all_outputs" = XX;
+        }
+        V {
+            "_pi" = ####;
+        }
+        V {
+            "_po" = ##;
+        }
+    }
+    "capture_clk" {
+        W "_default_WFT_";
+        C {
+            "all_inputs" = 0NNN;
+            "all_outputs" = XX;
+        }
+        "forcePI" : V {
+            "_pi" = ####;
+        }
+        "measurePO" : V {
+            "_po" = ##;
+        }
+        C {
+            "z" = X;
+        }
+        "pulse" : V {
+            "clk" = P;
+        }
+    }
+    "load_unload" {
+        W "_default_WFT_";
+        C {
+            "all_inputs" = 0NNN;
+            "all_outputs" = XX;
+        }
+        "Internal_scan_pre_shift" : V {
+            "_clk" = 0;
+            "_si" = N;
+            "_so" = #;
+            "test_se" = 1;
+        }
+        Shift {
+            V {
+                "_clk" = P;
+                "_si" = #;
+                "_so" = #;
+            }
+        }
+    }
+}
+MacroDefs {
+    "test_setup" {
+        W "_default_WFT_";
+        C {
+            "all_inputs" = NNNN;
+            "all_outputs" = XX;
+        }
+        V {
+            "clk" = 0;
+        }
+        V {
+        }
+    }
+}
