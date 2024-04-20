@@ -1,35 +1,27 @@
-def lfsr(seed, polynomial, num_bits):
-    result = [0] * num_bits
-    for i in range(num_bits):
-        feedback = seed & 1
-        result[i] = seed
-        seed >>= 1
-        if feedback:
-            seed ^= polynomial
-    return result
+import numpy as np
 
-def generate_patterns(initial_value, polynomial, num_patterns, num_bits):
-    patterns = []
-    seed = initial_value
-    for _ in range(num_patterns):
-        result = lfsr(seed, polynomial, num_bits)
-        patterns.append(result)
-        seed = result[-1]
-    return patterns
+# Define the size of the diagonal matrix
+matrix_size = 5
 
-def format_output(patterns):
-    output = ''
-    for pattern in patterns:
-        output += ''.join(str(bit) for bit in pattern[::-1]) + '\n'
-    return output
+# Create a diagonal matrix with all ones
+diagonal_matrix = np.eye(matrix_size)
 
-# Parameters
-initial_value = 0b00000001
-polynomial = 0b100011011
-num_patterns = 8
-num_bits = 8
+# Add a row of all zeros at the top
+new_row = np.zeros((1, matrix_size))
+matrix_with_zeros_row = np.vstack((new_row, diagonal_matrix))
 
-# Generate and print the first 8 pseudo-random patterns
-patterns = generate_patterns(initial_value, polynomial, num_patterns, num_bits)
-output = format_output(patterns)
-print(output)
+# Define the function
+def function(x):
+    return x**2 + 1
+
+# Generate values for the function
+x_values = np.arange(matrix_size)  # Assuming x values from 0 to matrix_size-1
+function_values = function(x_values)
+
+# Reshape function_values to be a column vector
+function_column = function_values.reshape(-1, 1)
+
+# Concatenate the function column to the matrix
+matrix_with_function_column = np.hstack((matrix_with_zeros_row, function_column))
+
+print(matrix_with_function_column)
