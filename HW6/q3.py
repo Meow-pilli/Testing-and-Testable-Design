@@ -18,10 +18,11 @@ def function(x):
 x_values = np.arange(matrix_size)  # Assuming x values from 0 to matrix_size-1
 function_values = function(x_values)
 
-# Reshape function_values to be a column vector
 function_column = function_values.reshape(-1, 1)
 
+function_column_with_zeros = np.vstack((np.zeros((1, 1)), function_column))
+
 # Concatenate the function column to the matrix
-matrix_with_function_column = np.hstack((matrix_with_zeros_row, function_column))
+matrix_with_function_column = np.hstack((matrix_with_zeros_row, function_column_with_zeros))
 
 print(matrix_with_function_column)
