@@ -1,28 +1,27 @@
 import numpy as np
 
-# Define the size of the diagonal matrix
-matrix_size = 5
+def create_diagonal_matrix(n):
+    matrix = np.eye(n)  # Create an identity matrix of size n x n
+    return matrix
 
-# Create a diagonal matrix with all ones
-diagonal_matrix = np.eye(matrix_size)
+def add_row(matrix):
+    row_of_zeros = np.zeros((1, matrix.shape[1]))  # Create a row of zeros
+    matrix = np.vstack((row_of_zeros, matrix))  # Add the row of zeros on top
+    return matrix
 
-# Add a row of all zeros at the top
-new_row = np.zeros((1, matrix_size))
-matrix_with_zeros_row = np.vstack((new_row, diagonal_matrix))
+def add_column(matrix, func):
+    x_values = np.arange(1, matrix.shape[0] + 1)  # Generate x values from 1 to n
+    column_values = func(x_values)  # Calculate column values using the given function
+    column_values = column_values.reshape((matrix.shape[0], 1))  # Reshape to column vector
+    matrix = np.hstack((matrix, column_values))  # Add the column to the matrix
+    return matrix
 
-# Define the function
 def function(x):
-    return x**2 + 1
+    return x**2 + 1   # Function x^2 + 1 for odd values of x, 0 for even values
 
-# Generate values for the function
-x_values = np.arange(matrix_size)  # Assuming x values from 0 to matrix_size-1
-function_values = function(x_values)
+n = 5  # Size of the square matrix
+diagonal_matrix = create_diagonal_matrix(n)
+diagonal_matrix_with_zeros_row = add_row(diagonal_matrix)
+final_matrix = add_column(diagonal_matrix_with_zeros_row, function)
 
-function_column = function_values.reshape(-1, 1)
-
-function_column_with_zeros = np.vstack((np.zeros((1, 1)), function_column))
-
-# Concatenate the function column to the matrix
-matrix_with_function_column = np.hstack((matrix_with_zeros_row, function_column_with_zeros))
-
-print(matrix_with_function_column)
+print(final_matrix)
